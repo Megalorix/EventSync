@@ -1,0 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
+
+body {
+  font-family: "Figtree", sans-serif;
+  display: flex;
+  justify-content: center;
+  background-color: #c9edff;
+}
+
+#app {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.controls { 
+  position: fixed;
+  z-index: 10;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+  min-width: 300px;
+}
+
+input[type="text"] {
+  width: 90%;
+  margin-bottom: 15px;
+  margin-top: 8px;
+  padding: 12px 12px;
+  font-size: 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f3f3f3;
+}
+
+.checkbox-wrapper {
+  margin-bottom: 5px;
+}
+
+.duration-input {
+  padding: 10px 5px 10px 12px;
+  max-width: 50px;
+  margin: 5px 0px 20px 0px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.duration-input::-webkit-inner-spin-button,
+.duration-input::-webkit-outer-spin-button {
+  -webkit-appearance: auto;
+  display: block;
+  width: 30px;
+  height: 30px;
+  opacity: 1 !important;
+}
+
+.buttons-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  
+}
+
+.buttons-wrapper button {
+  border: none;
+  padding: 10px 15px;
+  margin: 4px;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+.buttons-wrapper button:hover {
+  opacity: 0.7;
+}
+
+.delete-btn {
+  color: white;
+  background-color: #c44549;
+}
+
+.submit-btn {
+  color: white;
+  background-color: #1f97f2;
+}
+
+.grid {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  margin-top: 20px;
+  width: fit-content;
+  position: relative; 
+  border-radius: 20px;
+  overflow: hidden;
+  min-width: 932px;
+}
+
+.header,
+.row {
+  display: flex;
+}
+
+.cell {
+  width: 150px;
+  height: 30px;
+  border: .5px solid #ddd;
+  text-align: center;
+  line-height: normal;
+  font-size: 11px;
+  padding: 2px;
+  overflow: visible;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  position: relative;
+}
+
+.time {
+  background: #f9f9f9;
+  font-weight: bold;
+  text-align: center;
+  justify-content: center;
+}
+
+.selected-slot {
+  background: #fffde7;
+  padding: 6px;
+  margin-bottom: 10px;
+  font-style: italic;
+  color: #555;
+}
+
+.class-block {
+  flex: 1;
+  margin: 2px;
+  border-radius: 5px;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 12px;
+  background: #e3f2fd;
+  color: #0d47a1;
+  overflow: hidden;
+  box-sizing: border-box;
+  text-align: center;
+  min-width: 0;
+}
+
+.cell.selected {
+  background: #fffde7; 
+}
+
+body::after {
+  content: "";
+  display: block;
+  height: 200px;
+}
+
+.inline-delete {
+  margin-left: 10px;
+  background-color: #c44549;
+  color: white;
+  border: none;
+  padding: 2px 6px;
+  font-size: 11px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.inline-delete:hover {
+  background-color: #a1333a;
+}
+
+.day {
+  margin: 12px;
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+}
+
+.day-cell {
+  min-height: 50px;
+  background-color: #f9f9f9;
+}
+
+.time-header {
+  background: #f0f0f0;
+}
+
+.hours {
+  margin: 0;
+  font-size: 18px;
+}
+
+.username {
+  margin: 0;
+  padding: 0;
+  font-weight: 600;
+}
+
+.classname {
+  margin: 0;
+  padding: 0;
+}
+
+.schedule {
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #fff;
+}
+
+.schedule > h3 {
+  margin-top: 0px;
+}
+
+ul {
+  padding-inline-start: 0px;
+}
+
+li {
+  list-style-type: none;
+  padding: 10px 10px;
+  margin: 0px 0px 15px !important;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  
+}
+
+li button {
+  height: 20px;
+}
+
+.meeting-list-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start
+}
+
+.meeting-list-item button {
+  height: auto;
+  margin: 8px 5px 15px;
+}
+
+.meeting-list-item .inline-delete {
+  margin: 0;
+  height: 20px;
+}
+
+.attend-btn {
+  background-color: #1f97F2;
+  color: white;
+}
+
+.meeting-list-item input {
+  background-color: white;
+}
+
+.meeting-list-item p {
+  margin: 0;
+}
+
+.meeting-tag {
+  background-color: white;
+  width: auto;
+  font-weight: 600;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.meeting-list-title {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.list-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

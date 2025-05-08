@@ -1,0 +1,143 @@
+<div id="app">
+
+    <div class="grid">
+      <h2>📚 EventSync: Campus Edition 📚</h2>
+      <!-- Control Panel -->
+      <div 
+        class="controls"
+        v-if="classForm.day"
+        :style="panelStyle">
+        
+        <div class="selected-slot" v-if="classForm.day">
+          Selected: {{ classForm.day }} {{ classForm.start }}
+        </div>
+        
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="isGroup" v-model="classForm.isGroup">
+          <label for="isGroup">This is a group meeting</label>
+        </div>
+        
+        <br>
+        
+        <label>{{ classForm.isGroup ? 'Meeting Name:' : 'Username:' }}</label>
+        <input type="text" v-model="classForm.username" :placeholder="classForm.isGroup ? 'e.g. Doodle 1 Initial Meeting' : 'Your Name' " />
+        <br>
+        <label>{{ classForm.isGroup ? 'Meeting Description:' : 'Class Name:' }}</label>
+        <input type="text" v-model="classForm.classname" :placeholder="classForm.isGroup ? 'Meeting Description' : 'Class Name (e.g. CS101)' " />
+        <label>Length:</label>
+        <br>
+        <input
+          type="number"
+          v-model.number="classForm.duration"
+          min="0.5"
+          step="0.5"
+          class="duration-input"
+          @keydown.prevent
+        />
+        <label> Hours</label>
+        <br>
+        <div class="buttons-wrapper">
+          <div>
+            <button @click="addClass" class="submit-btn">Submit</button>
+            <button @click="cancelSelection" class="cancel-btn">Cancel</button>
+          </div>
+          <button v-if="classForm.id" @click="deleteClass" class="delete-btn">Delete Class</button>
+        </div>
+      </div>
+  
+    <!-- Table Start -->
+    <div class="header">
+      <div class="cell time-header day-cell"></div>
+      <div class="cell day-cell" v-for="d in days" :key="d"><p class="day">{{ d }}</p></div>
+    </div>
+  
+    <div v-for="hour in hours" :key="hour">
+      <!-- :00 Row -->
+      <div class="row">
+        <div class="cell time" :data-time="`${hour}:00`"><p class="hours">{{ hour }}:00</p></div>
+        <div
+          class="cell"
+          v-for="day in days"
+          :key="day + `${hour}:00`"
+          @click="selectSlot(day, `${hour}:00`, $event)"
+          :class="{ selected: isSelected(day, `${hour}:00`) }"
+        >
+          <template v-for="theClass in filterClass(day, `${hour}:00`)" :key="theClass.id">
+            <div
+              v-if="theClass.start === `${hour}:00`"
+              class="class-block"
+              :style="{
+                backgroundColor: theClass.color,
+                height: `${theClass.duration * 70 - 4}px`
+              }"
+            >
+              <span class="username">{{ theClass.username }}</span>
+              <span class="classname">{{ theClass.classname }}<span>
+            </div>
+          </template>
+        </div>
+      </div>
+  
+      <!-- :30 Row (conditionally shown) -->
+      <div class="row" v-if="hourHasClass && hourHasClass[hour]">
+        <div class="cell time" :data-time="`${hour}:30`"></div>
+        <div
+          class="cell"
+          v-for="day in days"
+          :key="day + `${hour}:30`"
+          @click="selectSlot(day, `${hour}:30`, $event)"
+          :class="{ selected: isSelected(day, `${hour}:30`) }"
+        >
+          <template v-for="theClass in filterClass(day, `${hour}:30`)" :key="theClass.id">
+            <div
+              v-if="theClass.start === `${hour}:30`"
+              class="class-block"
+              :style="{
+                backgroundColor: theClass.color,
+                height: `${theClass.duration * 70 - 4}px`
+              }"
+              @click.stop="selectClass(theClass, $event)"
+            >
+              <span class="username">{{ theClass.username }}</span>
+              <span class="classname">{{ theClass.classname }}<span>
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+    <!-- Table End -->
+  </div>
+      
+  <div class="schedule">
+    <h3>Current Schedule:</h3>
+    <ul>
+      <li v-for="c in classSchedule" 
+          :key="c.id" 
+          style="margin-bottom: 8px;"
+          :style="{backgroundColor: c.color}">
+        
+        <div v-if="c.isGroup" class="meeting-list-item">
+          <div class="meeting-list-title">
+            <div class="meeting-tag">Group Meeting</div>
+            <button @click="deleteClassById(c.id)" class="inline-delete">✖</button>
+          </div>
+          <span><b>{{ c.username }} – ({{ c.day }} {{ c.start }}–{{ c.end }})</b></span>
+          <span>{{ c.classname }}</span>
+          <div class="buttons-wrapper">
+            <input type="text" v-model="c.newAttendee" placeholder="your name">
+            <button @click="attend(c)" class="attend-btn">Attend</button>
+          </div>
+          <p>Attendees: {{ c.attendees.join(", ") }}</p>
+        </div>
+        
+        <div v-else class="list-wrapper">
+          <span>{{ c.username }} – {{ c.classname }} ({{ c.day }} {{ c.start }}–{{ c.end }})</span>
+          <button @click="deleteClassById(c.id)" class="inline-delete">✖</button>
+        </div>
+        
+      </li>
+    </ul>
+  </div>
+      
+  </div>
+  
