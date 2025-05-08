@@ -43,12 +43,9 @@ const App = Vue.createApp({
       },
       classSchedule: [],
       days: ["Mon", "Tue", "Wed", "Thu", "Fri"],
-      
       hours: Array.from({ length: (22 - 8) + 1 }, (_, i) => 8 + i)
-      
     };
   },
-
  
   computed: {
     hourHasClass() {
@@ -68,7 +65,6 @@ const App = Vue.createApp({
     }
   },
   
-  
   methods: {
     // Generate a random color for new users
     getColor(username) { 
@@ -79,7 +75,6 @@ const App = Vue.createApp({
       return this.userColors[username];
     },
     
-    // Is called when an empty slot is selected - not a class
     selectSlot(day, hour, event) {
       this.classForm.id = ""; 
       this.classForm.username = "";
@@ -145,7 +140,6 @@ const App = Vue.createApp({
         isGroup: false
       };
     }, 
-    
     // ---- AddClass end
     
     // called when rendering classes, returns a single class object
@@ -165,15 +159,6 @@ const App = Vue.createApp({
          return totalMinutes >= startTotalMinutes && totalMinutes < endTotalMinutes;
        });
     },
-    
-    // called an existing class is clicked
-    selectClass(theClass, clickEvent) {
-      this.classForm = { ...theClass };
-      console.log("Selected for edit:", this.classForm.id);
-      
-      this.panelStyle.top  = `${clickEvent.clientY}px`;
-      this.panelStyle.left = `${clickEvent.clientX}px`;
-    }, 
     
     // Calls when user wants to cancel the current selection of the slot
     cancelSelection() {
@@ -209,7 +194,6 @@ const App = Vue.createApp({
      await updateDoc(classRef, {attendees: arrayUnion(name)});
      c.newAttendee = "";
    },
-    
   },
   
   mounted() {
